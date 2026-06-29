@@ -42,10 +42,10 @@
       "options": [
         {
           "name": "Secret",
-          "variable": null,
+          "variable": "cutieMewMewMagicSecretHint",
           "description": "",
           "type": "substate",
-          "initial": null,
+          "initial": false,
           "path": "SecretHintSubState"
         }
       ]
