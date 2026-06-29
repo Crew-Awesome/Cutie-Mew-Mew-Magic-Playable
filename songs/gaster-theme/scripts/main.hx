@@ -1,81 +1,16 @@
 import funkin.visuals.game.Note;
 import flixel.text.FlxText.FlxTextBorderStyle;
-import modcharting.ModchartManager;
-import modcharting.modifiers.modifiers.GasterSineModifier;
+import cutiemewmew.GasterModchartController;
 
 var gasterBg:FlxSprite;
 var introOverlay:FlxSprite;
 var introText:FlxText;
 var introStarted:Bool = false;
 var introActive:Bool = false;
-var gasterModchartManager:ModchartManager;
-var gasterSineModifier:GasterSineModifier;
+var gasterModchart:GasterModchartController;
 
 function getPlay():PlayState
     return PlayState.instance;
-
-function centerPlayerStrumLine()
-{
-    final play = getPlay();
-
-    if (play == null || play.playerStrumLines == null || play.playerStrumLines.members == null)
-        return;
-
-    final line = play.playerStrumLines.members[0];
-
-    if (line == null || line.strums == null || line.strums.members == null || line.strums.members[0] == null)
-        return;
-
-    final first = line.strums.members[0];
-    final spacing = line.config.spacing;
-    final totalWidth = spacing * (line.strums.members.length - 1) + first.width;
-    final targetX = (FlxG.width - totalWidth) / 2;
-
-    line.x = 0;
-
-    for (index => strum in line.strums.members)
-        if (strum != null)
-            strum.x = targetX + spacing * index;
-}
-
-function modchartEnabled():Bool
-{
-    final value:Dynamic = ClientPrefs.getPreference('cutieMewMewMagicModcharts');
-
-    return value != false;
-}
-
-function setupGasterModchartManager()
-{
-    final play = getPlay();
-
-    if (play == null || play.playerStrumLines == null || gasterModchartManager != null)
-        return;
-
-    gasterModchartManager = new ModchartManager(play.playerStrumLines);
-    gasterSineModifier = new GasterSineModifier();
-    gasterModchartManager.prepareMod('gasterSine', function()
-    {
-        return gasterSineModifier;
-    }, -1, -1);
-    gasterSineModifier.value = modchartEnabled() ? 1 : 0;
-
-    final targetIndex:Int = play.strumLines == null ? -1 : game.members.indexOf(play.strumLines);
-
-    if (targetIndex >= 0)
-        game.insert(targetIndex, gasterModchartManager);
-    else
-        game.add(gasterModchartManager);
-}
-
-function syncGasterModchart()
-{
-    if (gasterSineModifier == null)
-        return;
-
-    gasterSineModifier.value = modchartEnabled() ? 1 : 0;
-    gasterSineModifier.markDirty();
-}
 
 function hidePlayObjects()
 {
@@ -278,9 +213,8 @@ function postCreate()
     gasterBg.screenCenter();
     insert(0, gasterBg);
 
-    centerPlayerStrumLine();
-    setupGasterModchartManager();
-    syncGasterModchart();
+    gasterModchart = new GasterModchartController();
+    gasterModchart.setup();
     layoutHealthBar();
     updateStackedScoreText();
 }
@@ -290,8 +224,8 @@ function onUpdate(elapsed:Float)
     if (introActive)
         setGameplayInputBlocked(true);
 
-    centerPlayerStrumLine();
-    syncGasterModchart();
+    if (gasterModchart != null)
+        gasterModchart.update();
     hidePlayObjects();
     layoutHealthBar();
     updateStackedScoreText();
