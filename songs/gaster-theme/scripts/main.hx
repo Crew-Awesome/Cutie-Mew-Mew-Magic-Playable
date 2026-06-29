@@ -1,13 +1,15 @@
 import funkin.visuals.game.Note;
 import flixel.text.FlxText.FlxTextBorderStyle;
+import modcharting.ModchartManager;
+import modcharting.modifiers.modifiers.GasterSineModifier;
 
 var gasterBg:FlxSprite;
 var introOverlay:FlxSprite;
 var introText:FlxText;
 var introStarted:Bool = false;
 var introActive:Bool = false;
-var modchartBaseY:Array<Float> = [];
-var modchartTime:Float = 0;
+var gasterModchartManager:ModchartManager;
+var gasterSineModifier:GasterSineModifier;
 
 function getPlay():PlayState
     return PlayState.instance;
@@ -43,44 +45,36 @@ function modchartEnabled():Bool
     return value != false;
 }
 
-function applyGasterModchart(elapsed:Float)
+function setupGasterModchartManager()
 {
     final play = getPlay();
 
-    if (play == null || play.playerStrumLines == null || play.playerStrumLines.members == null)
+    if (play == null || play.playerStrumLines == null || gasterModchartManager != null)
         return;
 
-    final line = play.playerStrumLines.members[0];
+    gasterModchartManager = new ModchartManager(play.playerStrumLines);
+    gasterSineModifier = new GasterSineModifier();
+    gasterModchartManager.prepareMod('gasterSine', function()
+    {
+        return gasterSineModifier;
+    }, -1, -1);
+    gasterSineModifier.value = modchartEnabled() ? 1 : 0;
 
-    if (line == null || line.strums == null || line.strums.members == null)
+    final targetIndex:Int = play.strumLines == null ? -1 : game.members.indexOf(play.strumLines);
+
+    if (targetIndex >= 0)
+        game.insert(targetIndex, gasterModchartManager);
+    else
+        game.add(gasterModchartManager);
+}
+
+function syncGasterModchart()
+{
+    if (gasterSineModifier == null)
         return;
 
-    modchartTime += elapsed;
-
-    if (modchartBaseY.length != line.strums.members.length)
-        modchartBaseY = [for (strum in line.strums.members) strum == null ? 0 : strum.y];
-
-    final enabled:Bool = modchartEnabled();
-
-    for (index => strum in line.strums.members)
-    {
-        if (strum == null)
-            continue;
-
-        final wave:Float = enabled ? Math.sin(modchartTime * 1.75 + index * 0.8) * 14 : 0;
-        strum.y = modchartBaseY[index] + wave;
-    }
-
-    if (line.notes != null && line.notes.members != null)
-    {
-        for (note in line.notes.members)
-        {
-            if (note == null)
-                continue;
-
-            note.yOffset = enabled ? Math.sin(modchartTime * 1.75 + note.data * 0.8) * 14 : 0;
-        }
-    }
+    gasterSineModifier.value = modchartEnabled() ? 1 : 0;
+    gasterSineModifier.markDirty();
 }
 
 function hidePlayObjects()
@@ -285,7 +279,8 @@ function postCreate()
     insert(0, gasterBg);
 
     centerPlayerStrumLine();
-    applyGasterModchart(0);
+    setupGasterModchartManager();
+    syncGasterModchart();
     layoutHealthBar();
     updateStackedScoreText();
 }
@@ -296,7 +291,7 @@ function onUpdate(elapsed:Float)
         setGameplayInputBlocked(true);
 
     centerPlayerStrumLine();
-    applyGasterModchart(elapsed);
+    syncGasterModchart();
     hidePlayObjects();
     layoutHealthBar();
     updateStackedScoreText();
@@ -307,8 +302,6 @@ function postUpdate(elapsed:Float)
     if (introActive)
         setGameplayInputBlocked(true);
 
-    centerPlayerStrumLine();
-    applyGasterModchart(elapsed);
     hidePlayObjects();
     layoutHealthBar();
     updateStackedScoreText();
