@@ -1,0 +1,23 @@
+{
+  "songs": [
+    {
+      "name": "Cutie Mew Mew Magic",
+      "icon": "bf",
+      "color": "#FF9DD8"
+    }
+  ],
+  "background": "stage",
+  "image": "week1",
+  "phrase": "",
+  "locked": false,
+  "hideFreeplay": false,
+  "hideStoryMode": true,
+  "previousWeek": "",
+  "difficulties": [
+    "Easier",
+    "Cutie Mew Mew Magic",
+    "Harder",
+    "Hatsune Miku is the knight"
+  ],
+  "format": "ale-week-v0.1"
+}

@@ -1,0 +1,32 @@
+{
+  "developerMode": true,
+  "mobileMode": false,
+  "hotReloading": true,
+  "debugPrint": true,
+  "verbose": true,
+  "initialState": "InitialState",
+  "titleState": "MainMenuState",
+  "storyMenuState": "StoryMenuState",
+  "freeplayState": "FreeplayState",
+  "mainMenuState": "MainMenuState",
+  "creditsState": "CreditsState",
+  "optionsState": "OptionsState",
+  "masterState": "MasterState",
+  "pauseSubState": "PauseSubState",
+  "gameOverSubState": "GameOverSubState",
+  "transition": "FadeTransition",
+  "loadDefaultWeeks": false,
+  "bpm": 102,
+  "discordID": "1309982575368077416",
+  "discordButtons": [
+    {
+      "label": "ALE Psych Website",
+      "url": "https://ale-psych-crew.github.io/ALE-Psych-Site/"
+    }
+  ],
+  "title": "Cutie Mew Mew Magic Playable",
+  "windowColor": "0xFF212121",
+  "width": 1280,
+  "height": 720,
+  "save": "cutie-mew-mew-magic-playable"
+}

@@ -1,0 +1,20 @@
+{
+  "zoom": 1,
+  "speed": 1,
+  "hud": "default",
+  "charactersOffset": {
+    "type": {
+      "opponent": { "x": 0, "y": 0 },
+      "player": { "x": 0, "y": 0 },
+      "extra": { "x": 0, "y": 0 }
+    }
+  },
+  "charactersCamera": {
+    "type": {
+      "opponent": { "x": 0, "y": 0 },
+      "player": { "x": 0, "y": 0 },
+      "extra": { "x": 0, "y": 0 }
+    }
+  },
+  "format": "ale-stage-v0.1"
+}

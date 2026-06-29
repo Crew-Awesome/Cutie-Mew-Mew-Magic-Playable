@@ -1,0 +1,66 @@
+{
+  "directory": "main",
+  "cameraSpread": 0.15,
+  "text": "",
+  "textCorner": "bottom_left",
+  "textMargin": {
+    "x": 10,
+    "y": 10
+  },
+  "bg": {
+    "images": [
+      "bg"
+    ],
+    "type": "image",
+    "properties": {
+      "scale": {
+        "x": 1.125,
+        "y": 1.125
+      }
+    }
+  },
+  "options": [
+    {
+      "images": [
+        "freeplay"
+      ],
+      "type": "sheet",
+      "animations": [
+        {
+          "loop": true,
+          "name": "idle"
+        },
+        {
+          "loop": true,
+          "name": "selected"
+        }
+      ],
+      "state": "meta:freeplayState"
+    },
+    {
+      "images": [
+        "options"
+      ],
+      "type": "sheet",
+      "animations": [
+        {
+          "loop": true,
+          "name": "idle"
+        },
+        {
+          "loop": true,
+          "name": "selected"
+        }
+      ],
+      "state": "meta:optionsState"
+    }
+  ],
+  "optionsOffset": {
+    "x": 0,
+    "y": 15
+  },
+  "optionsSpacing": 190,
+  "optionsAlignment": "center",
+  "optionsSelectedAnimation": "selected",
+  "optionsIdleAnimation": "idle"
+}

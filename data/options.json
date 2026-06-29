@@ -1,0 +1,54 @@
+{
+  "categories": [
+    {
+      "name": "Cutie Mew Mew Magic Mod",
+      "options": [
+        {
+          "name": "Show Video",
+          "variable": "cutieMewMewMagicShowVideo",
+          "description": "Show the mp4 backdrop instead of the static background image.",
+          "type": "bool",
+          "initial": true
+        },
+        {
+          "name": "Dark Overlay",
+          "variable": "cutieMewMewMagicDarkOverlay",
+          "description": "How dark the backdrop overlay should be.",
+          "type": "float",
+          "initial": 0.35,
+          "min": 0,
+          "max": 0.85,
+          "change": 0.05,
+          "decimals": 2
+        },
+        {
+          "name": "Skip Credits Intro",
+          "variable": "cutieMewMewMagicSkipCreditsIntro",
+          "description": "Skip the pre-song credits screen and go straight to countdown.",
+          "type": "bool",
+          "initial": false
+        },
+        {
+          "name": "Modcharts",
+          "variable": "cutieMewMewMagicModcharts",
+          "description": "Enable scripted note movement and other modchart effects.",
+          "type": "bool",
+          "initial": true
+        }
+      ]
+    },
+    {
+      "name": "Secret",
+      "options": [
+        {
+          "name": "Secret",
+          "variable": null,
+          "description": "",
+          "type": "substate",
+          "initial": null,
+          "path": "SecretHintSubState"
+        }
+      ]
+    }
+  ]
+}
